@@ -33,6 +33,90 @@ def max_score():
         except ValueError:
             print("Please enter in a number")
 
+# This is the main code for a player's turn
+# Includes each scenario of pairings/tuples that can occur
+def cont_roll():
+    for i in range(num_players):
+        score = 0
+        print(f"Player {i + 1}'s turn:")
+        roll = dice()
+        print(f"Player {i + 1} rolled {roll}")
+        locked_values = []
+        roll = dice()   
+        # If the user 'tuples out'
+        if roll[0] == roll[1] == roll[2]:
+            print("Sorry, you have tupled out :(\nYour score that round is 0.")
+            score += 0
+                    
+        # Checks for pairs that are not tuples and locks those values
+                    
+        # If only dice 3 is unlocked
+        while True:            
+            if roll[0] == roll[1] and roll[2] != roll[1]:
+                print(f"Dice 1 and 2 are locked with a score of {roll[0]}")
+                locked_values.append(roll[0])
+                re_roll = input(f"Would you like to re-roll dice 3? It currently has a score of {roll[2]}")
+                if re_roll.lower() == "yes":
+                    roll[2] = random.randint(1, 6)
+                    print(f"Dice 3 now has a score of {roll[0]}")
+                elif re_roll.lower() == "no":
+                    roll[2] = locked_values
+                    score += roll[0] + roll[1] + roll[2]
+                    break
+                else:
+                    print("Please enter yes or no")
+            else:
+                print("Sorry, you have tupled out :(\nYour score that round is 0.")
+                score += 0
+                break
+                            
+        # If only dice 2 is unlocked                    
+        while True:
+            if roll[0] == roll[2] and roll[1] != roll[2]:
+                print(f"Dice 1 and 3 are locked with a score of {roll[0]}")
+                locked_values.append(roll[0])
+                re_roll = input(f"Would you like to re-roll dice 2? It currently has a score of {roll[1]}")
+                if re_roll.lower() == "yes":
+                    roll[1] = random.randint(1, 6)
+                    print(f"Dice 2 now has a score of {roll[0]}")
+                elif re_roll.lower() == "no":
+                    roll[1] = locked_values
+                    score += roll[0] + roll[1] + roll[2]
+                    break
+                else:
+                    print("Please enter yes or no")
+            else:
+                print("Sorry, you have tupled out :(\nYour score that round is 0.")
+                score += 0
+                break    
+                    
+        # If only dice 1 is unlocked
+        while True:
+            if roll[1] == roll[2] and roll[0] != roll[2]:
+                print(f"Dice 2 and 3 are locked with a score of {roll[1]}")
+                locked_values.append(roll[1])
+                re_roll = input(f"Would you like to re-roll dice 1? It currently has a score of {roll[0]}")
+                if re_roll.lower() == "yes":
+                    roll[0] = random.randint(1, 6)
+                    print(f"Dice 1 now has a score of {roll[0]}")
+                elif re_roll.lower() == "no":
+                    roll[0] = locked_values
+                    score += roll[0] + roll[1] + roll[2]
+                    break
+                else:
+                    print("Please enter yes or no")
+            else:
+                print("Sorry, you have tupled out :(\nYour score that round is 0.")
+                score += 0
+                break
+
+
+
+
+
+
+
+
 # Main game function
 def play_game():
     print("Welcome to the tuple dice game!")
@@ -41,80 +125,113 @@ def play_game():
     scores = [0] * num_players
     end_game = False
     # Runs so long as the winning score has not been reached
-    def cont_roll():
-        while not end_game:
-            for i in range(num_players):
-                score = 0
-                locked_values = []
-                print(f"Player {i + 1}'s turn:")
-                roll = dice()
-                print(f"Player {i + 1} rolled {roll}")
-                
-                # If the user 'tuples out'
-                if roll[0] == roll[1] == roll[2]:
-                    print("Sorry, you have tupled out :(\nYour score that round is 0.")
-                    score += 0
-                    continue
-                
-                # Checks for pairs that are not tuples and locks those values
-                while True:            
-                    if roll[0] == roll[1] and roll[2] != roll[1]:
-                        print(f"Dice 1 and 2 are locked with a score of {roll[0]}")
-                        locked_values.append(roll[0])
-                        re_roll = input(f"Would you like to re-roll dice 3? It currently has a score of {roll[2]}")
-                        if re_roll.lower() == "yes":
-                            roll[2] = random.randint(1, 6)
-                            print(f"Dice 3 now has a score of {roll[0]}")
-                        elif re_roll.lower() == "no":
-                            roll[2] = locked_values
-                            score += roll[0] + roll[1] + roll[2]
-                            break
-                        else:
-                            print("Please enter yes or no")
-                    else:
-                        print("Sorry, you have tupled out :(\nYour score that round is 0.")
-                        score += 0
-                        break
-                        
-                        
-                                    
-                while True:
-                    if roll[0] == roll[2] and roll[1] != roll[2]:
-                        print(f"Dice 1 and 3 are locked with a score of {roll[0]}")
-                        locked_values.append(roll[0])
-                        re_roll = input(f"Would you like to re-roll dice 2? It currently has a score of {roll[1]}")
-                        if re_roll.lower() == "yes":
-                            roll[1] = random.randint(1, 6)
-                            print(f"Dice 2 now has a score of {roll[0]}")
-                        elif re_roll.lower() == "no":
-                            roll[1] = locked_values
-                            score += roll[0] + roll[1] + roll[2]
-                            break
-                        else:
-                            print("Please enter yes or no")
-                    else:
-                        print("Sorry, you have tupled out :(\nYour score that round is 0.")
-                        score += 0
-                        break    
-                
-                while True:
-                    if roll[1] == roll[2] and roll[0] != roll[2]:
-                        print(f"Dice 2 and 3 are locked with a score of {roll[1]}")
-                        locked_values.append(roll[1])
-                        re_roll = input(f"Would you like to re-roll dice 1? It currently has a score of {roll[0]}")
-                        if re_roll.lower() == "yes":
-                            roll[0] = random.randint(1, 6)
-                            print(f"Dice 1 now has a score of {roll[0]}")
-                        elif re_roll.lower() == "no":
-                            roll[0] = locked_values
-                            score += roll[0] + roll[1] + roll[2]
-                            break
-                        else:
-                            print("Please enter yes or no")
-                    else:
-                        print("Sorry, you have tupled out :(\nYour score that round is 0.")
-                        score += 0
-                        break
+    while not end_game:
+
+
+    for i in range(num_players):
+        score = 0
+        print(f"Player {i + 1}'s turn:")
+        roll = dice()
+        print(f"Player {i + 1} rolled {roll}")
+        locked_values = []
+        roll = dice()   
+        # If the user 'tuples out'
+        if roll[0] == roll[1] == roll[2]:
+            print("Sorry, you have tupled out :(\nYour score that round is 0.")
+            score += 0
+                    
+        # Checks for pairs that are not tuples and locks those values
+                    
+        # If only dice 3 is unlocked
+        while True:            
+            if roll[0] == roll[1] and roll[2] != roll[1]:
+                print(f"Dice 1 and 2 are locked with a score of {roll[0]}")
+                locked_values.append(roll[0])
+                re_roll = input(f"Would you like to re-roll dice 3? It currently has a score of {roll[2]}")
+                if re_roll.lower() == "yes":
+                    roll[2] = random.randint(1, 6)
+                    print(f"Dice 3 now has a score of {roll[0]}")
+                elif re_roll.lower() == "no":
+                    roll[2] = locked_values
+                    score += roll[0] + roll[1] + roll[2]
+                    break
+                else:
+                    print("Please enter yes or no")
+            else:
+                print("Sorry, you have tupled out :(\nYour score that round is 0.")
+                score += 0
+                break
+                            
+        # If only dice 2 is unlocked                    
+        while True:
+            if roll[0] == roll[2] and roll[1] != roll[2]:
+                print(f"Dice 1 and 3 are locked with a score of {roll[0]}")
+                locked_values.append(roll[0])
+                re_roll = input(f"Would you like to re-roll dice 2? It currently has a score of {roll[1]}")
+                if re_roll.lower() == "yes":
+                    roll[1] = random.randint(1, 6)
+                    print(f"Dice 2 now has a score of {roll[0]}")
+                elif re_roll.lower() == "no":
+                    roll[1] = locked_values
+                    score += roll[0] + roll[1] + roll[2]
+                    break
+                else:
+                    print("Please enter yes or no")
+            else:
+                print("Sorry, you have tupled out :(\nYour score that round is 0.")
+                score += 0
+                break    
+                    
+        # If only dice 1 is unlocked
+        while True:
+            if roll[1] == roll[2] and roll[0] != roll[2]:
+                print(f"Dice 2 and 3 are locked with a score of {roll[1]}")
+                locked_values.append(roll[1])
+                re_roll = input(f"Would you like to re-roll dice 1? It currently has a score of {roll[0]}")
+                if re_roll.lower() == "yes":
+                    roll[0] = random.randint(1, 6)
+                    print(f"Dice 1 now has a score of {roll[0]}")
+                elif re_roll.lower() == "no":
+                    roll[0] = locked_values
+                    score += roll[0] + roll[1] + roll[2]
+                    break
+                else:
+                    print("Please enter yes or no")
+            else:
+                print("Sorry, you have tupled out :(\nYour score that round is 0.")
+                score += 0
+                break
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
             
             # If none of the dice are locked
             while True:
@@ -122,7 +239,7 @@ def play_game():
                     print("No dice are locked. You can choose to re-roll them all again.")
                     re_roll = input("Would you like to re-roll all the dice? (yes/no): ")
                     if re_roll.lower() == "yes":
-                        roll = cont_roll()
+                        roll = dice()
                     elif re_roll.lower() == "no":
                         print(f"Your final tally for that round was -\nDice 1: {roll[0]}\nDice 2: {roll[1]}\nDice 3: {roll[2]}")
                         score += roll[0] + roll[1] + roll[2]
@@ -153,3 +270,30 @@ play_game()
             
             
 # dice, players, score, max points
+
+
+import random 
+
+# functions for each dice roll
+
+# dice 1 roll
+def dice_1():
+    dice_1 = [1, 2, 3, 4, 5, 6]
+    dice_1_roll = random.choice(dice_1)
+    return(dice_1_roll)
+
+# dice 2 roll
+def dice_2():
+    dice_2 = [1, 2, 3, 4, 5, 6]
+    dice_2_roll = random.choice(dice_2)
+    return dice_2_roll
+
+# dice 3 roll
+def dice_3():
+    dice_3 = [1, 2, 3, 4, 5, 6]
+    dice_3_roll = random.choice(dice_3)
+    return dice_3_roll
+
+dice_1()
+dice_2()
+dice_3()
