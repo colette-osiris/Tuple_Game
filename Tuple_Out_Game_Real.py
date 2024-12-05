@@ -48,6 +48,10 @@ def max_score():
         except ValueError:
             print("Please enter in a number")
 
+# dice rolling intro (first roll and additional rolls if no dice are equal)
+    
+    
+    
 # main game loop
 def game_loop():
     print("Welcome to the tuple dice game!")
@@ -126,8 +130,42 @@ def game_loop():
                 
             while True:
                 if dice1 != dice2 and dice1 != dice3 and dice2 != dice3:
-                    ...
-                
+                    print ("None of the dice are locked.")
+                    re_roll_choice = input("Would you like to re-roll all dice or specific dice? Enter 'all', '1', '2', '3', or 'none': ").strip().lower()
+
+                    if re_roll_choice.lower() == "all":
+                        dice1 = dice_1()
+                        dice2 = dice_2()
+                        dice3 = dice_3()
+                        print(f"New rolls:\nDice 1: {dice1}\nDice 2: {dice2}\nDice 3: {dice3}")
+                        
+                    elif re_roll_choice == "1":
+                        dice1 = dice_1()
+                        print(f"New roll for Dice 1: {dice1}")
+                        
+                    elif re_roll_choice == "2":
+                        dice2 = dice_2()
+                        print(f"New roll for Dice 2: {dice2}")
+                        
+                    elif re_roll_choice == "3":
+                        dice3 = dice_3()
+                        print(f"New roll for Dice 3: {dice3}")
+                        
+                    elif re_roll_choice.lower() == "none":
+                        print("Keeping current rolls.")
+                        print(f"Dice 1: {dice1}\nDice 2: {dice2}\nDice 3: {dice3}")
+                        score = dice1 + dice2 + dice3
+                        print(f"Your score that round is: {score}")
+                        break
+                    
+                    else:
+                        print("Invalid input. Please enter 'all', '1', '2', '3', or 'none'.")
+                        
+                else:
+                    print("Sorry, you have tupled out. Your score that round is 0.")
+                    score += 0
+                    break
+                            
             
             
 game_loop()
