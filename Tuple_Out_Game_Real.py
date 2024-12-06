@@ -51,7 +51,6 @@ def max_score():
 # dice rolling intro (first roll and additional rolls if no dice are equal)
     
     
-    
 # main game loop
 def game_loop():
     print("Welcome to the tuple dice game!")
@@ -59,112 +58,87 @@ def game_loop():
     score_limit = max_score()
     scores = [0] * num_players
     end_game = False
+    
     while not end_game:
         for i in range(num_players):
             score = 0
-            dice1 = dice_1()
-            dice2 = dice_2()
-            dice3 = dice_3()
+            dice1, dice2, dice3 = dice_1(), dice_2(), dice_3()
             print(f"Player {i + 1}'s turn:")
             print(f"Dice 1: {dice1}\nDice 2: {dice2}\nDice 3: {dice3}")
             
             while True:
+                
+                
+                # Scnenario 1: all dice are the same (Tuple out)
                 if dice1 == dice2 == dice3:
                     print("Sorry, you have tupled out. Your score that round is 0.")
                     score += 0
                     break
                 
-            while True:
-                if dice1 == dice2 and dice3 != dice2:
+                
+                # Scnenario 2: two dice are the same
+                elif dice1 == dice2 and dice3 != dice2:
                     print(f"Dice 1 and Dice 2 are locked with a score of {dice1}")
                     re_roll = input(f"Would you like to re-roll dice 3? It currently has a score of {dice3}. (yes/no): ")
                     if re_roll.lower() == "yes":
                         dice3 = dice_3()
                     elif re_roll.lower() == "no":
-                        print(f"Dice 1: {dice1}\nDice 2: {dice2}\nDice 3: {dice3}")
-                        score = dice1 + dice2 + dice3
-                        print(f"Your score that round is: {score}")
                         break
                     else:
                         print("Please enter yes/no")
-                else:
-                    print("Sorry, you have tupled out. Your score that round is 0.")
-                    score += 0
-                    break
-            
-            while True:
-                if dice1 == dice3 and dice2 != dice3:
+
+                elif dice1 == dice3 and dice2 != dice3:
                     print(f"Dice 1 and Dice 3 are locked with a score of {dice1}")
                     re_roll = input(f"Would you like to re-roll dice 2? It currently has a score of {dice2}. (yes/no): ")
                     if re_roll.lower() == "yes":
                         dice2 = dice_2()
                     elif re_roll.lower() == "no":
-                        print(f"Dice 1: {dice1}\nDice 2: {dice2}\nDice 3: {dice3}")
-                        score = dice1 + dice2 + dice3
-                        print(f"Your score that round is: {score}")
                         break
                     else:
                         print("Please enter yes/no")
-                else:
-                    print("Sorry, you have tupled out. Your score that round is 0.")
-                    score += 0
-                    break
             
-            while True:
-                if dice2 == dice3 and dice1 != dice3:
+                elif dice2 == dice3 and dice1 != dice3:
                     print(f"Dice 2 and Dice 3 are locked with a score of {dice2}")
                     re_roll = input(f"Would you like to re-roll dice 1? It currently has a score of {dice1}. (yes/no): ")
                     if re_roll.lower() == "yes":
                         dice1 = dice_1()
                     elif re_roll.lower() == "no":
-                        print(f"Dice 1: {dice1}\nDice 2: {dice2}\nDice 3: {dice3}")
-                        score = dice1 + dice2 + dice3
-                        print(f"Your score that round is: {score}")
                         break
                     else:
                         print("Please enter yes/no")
+                        
+                        
+                # Scnenario 3: all dice are different
                 else:
-                    print("Sorry, you have tupled out. Your score that round is 0.")
-                    score += 0
-                    break
-                
-            while True:
-                if dice1 != dice2 and dice1 != dice3 and dice2 != dice3:
                     print ("None of the dice are locked.")
                     re_roll_choice = input("Would you like to re-roll all dice or specific dice? Enter 'all', '1', '2', '3', or 'none': ").strip().lower()
 
-                    if re_roll_choice.lower() == "all":
-                        dice1 = dice_1()
-                        dice2 = dice_2()
-                        dice3 = dice_3()
-                        print(f"New rolls:\nDice 1: {dice1}\nDice 2: {dice2}\nDice 3: {dice3}")
-                        
+                    if re_roll_choice == "all":
+                        dice1, dice2, dice3 = dice_1(), dice_2(), dice_3()
                     elif re_roll_choice == "1":
                         dice1 = dice_1()
-                        print(f"New roll for Dice 1: {dice1}")
-                        
                     elif re_roll_choice == "2":
                         dice2 = dice_2()
-                        print(f"New roll for Dice 2: {dice2}")
-                        
                     elif re_roll_choice == "3":
                         dice3 = dice_3()
-                        print(f"New roll for Dice 3: {dice3}")
-                        
-                    elif re_roll_choice.lower() == "none":
-                        print("Keeping current rolls.")
-                        print(f"Dice 1: {dice1}\nDice 2: {dice2}\nDice 3: {dice3}")
-                        score = dice1 + dice2 + dice3
-                        print(f"Your score that round is: {score}")
+                    elif re_roll_choice == "none":
                         break
-                    
                     else:
                         print("Invalid input. Please enter 'all', '1', '2', '3', or 'none'.")
                         
-                else:
-                    print("Sorry, you have tupled out. Your score that round is 0.")
-                    score += 0
-                    break
+                # Dice values after turn
+                print(f"Updated Dice Rolls:\nDice 1: {dice1}\nDice 2: {dice2}\nDice 3: {dice3}")
+
+            # Calculate final score for the round
+            score = dice1 + dice2 + dice3
+            print(f"Player {i + 1}'s score this round: {score}")
+            scores[i] += score
+            
+            # Check if the player has reached the score limit
+            if scores[i] >= score_limit:
+                print(f"Player {i + 1} wins the game with a score of {scores[i]}!")
+                end_game = True
+                break
                             
             
             
