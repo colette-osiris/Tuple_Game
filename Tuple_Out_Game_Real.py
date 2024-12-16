@@ -4,6 +4,7 @@ import random
 
 # dice 1 roll
 def dice_1():
+    """creates a dictionary of numbers for the random function to choose from"""
     dice_1 = [1, 2, 3, 4, 5, 6]
     dice_1_roll = random.choice(dice_1)
     return(dice_1_roll)
